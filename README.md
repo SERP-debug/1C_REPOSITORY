@@ -20,6 +20,7 @@
 ![50 5 Параметры приложения](https://github.com/user-attachments/assets/c991774b-c3bd-42ee-8985-3fa19905ff55)
 
 Перезагрузка службы IIS iisreset
+
 Можно посмотреть результат на момент публикации 
 https://serp-debug.github.io/1C_REPOSITORY/
 
