@@ -18,5 +18,4 @@
 
 Перезагрузка службы IIS iisreset
 
-![Uploading 50 6 Рузультат.jpg…]()
-
+![50 6 Рузультат](https://github.com/user-attachments/assets/ebc3156f-1e05-479a-8dba-517aff3db4a3)
