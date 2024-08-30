@@ -21,7 +21,7 @@ $ReplaceableText +=
 }
 
 #Получение параметров из config.ini
-Get-Content $PathIniFile | foreach-object -begin {$h=@{}} -process { $k = [regex]::split($_,'='); if(($k[0].CompareTo("") -ne 0) -and ($k[0].StartsWith("[") -ne $True)) { $h.Add($k[0], $k[1]) } }
+Get-Content $PathIniFile | foreach-object -begin{$h=@{}} -process { $k = [regex]::split($_,'='); if(($k[0].CompareTo("") -ne 0) -and ($k[0].StartsWith("[") -ne $True)) { $h.Add($k[0], $k[1]) } }
 
 $DirREPOSITORY = $h.Get_Item("DirREPOSITORY")
 $TmpHTML       = $h.Get_Item("TmpHTML")
