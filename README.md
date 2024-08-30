@@ -11,7 +11,7 @@
 
 •	где будет лежать сам html - файл со списком ИБ Хранилищ
 
-![50 2 Конфигурационный файл](https://github.com/user-attachments/assets/e54346c8-7ea2-4f5d-b742-5a9cb81560a1)
+![50 2 Конфигурационный файл](https://github.com/user-attachments/assets/36df41e5-cad8-42c9-b653-cbb2df521349)
 
 Добавление приложения в IIS
 
