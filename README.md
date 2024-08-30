@@ -11,7 +11,7 @@
 
 •	где будет лежать сам html - файл со списком ИБ Хранилищ
 
-![50 2 Конфигурационный файл](https://github.com/user-attachments/assets/8f34d70f-b4a3-440a-8f87-8f4fd2b98a59)
+![55 config](https://github.com/user-attachments/assets/bbcc2170-83a3-43c5-9862-1c6a0a464918)
 
 Добавление приложения в IIS
 
@@ -22,10 +22,8 @@
 Перезагрузка службы IIS iisreset
 
 Можно посмотреть результат на момент публикации 
-
 https://serp-debug.github.io/1C_REPOSITORY/
 
 Запуск скрипта из командной строки 
-
 ![55 Обязательный параметр](https://github.com/user-attachments/assets/555240f9-36d8-451e-9b7c-aae95cdcd535)
 
