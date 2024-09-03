@@ -28,7 +28,7 @@ $TmpHTML       = $h.Get_Item("TmpHTML")
 $ResultHTML    = $h.Get_Item("HTML")
 
 # Загрузка и сортировка папок ИБ 
-$bsort = Get-Childitem -Path $DirREPOSITORY -Directory | Sort-Object -Property LastWriteTime -Descending
+$bsort = Get-Childitem -Path $DirREPOSITORY -Directory | Sort-Object -Property CreationTime -Descending
 
 # Полечение текста замены
 $ReplaceText = ApplyTmp
