@@ -15,20 +15,71 @@
         </div>
         <h1 style="padding: 10px;" class="text-violet text-center" >Список хранилищ ИБ</h1>
         
-        <div class="listbase">
-                          
-          <div>anchor</div>
-          <p style="text-align: right">ver:1.0.1.</p>
-                
-        </div>       
+        <!-- Поиск -->
+		<table>                    
+			<td>
+				<form id="FormSearchBar" class="right_form">
+					<input style="text-align: left; width: 215px" type="text" id="myInput" onkeyup="myFunctionFind()" placeholder="Поиск ..." title="Введите текст поиска ">
+					<button onclick="clearInputField()">X</button>
+				</form>	
+			</td>
+		</table>
+
+                  
+        <table id="myTable">
+            <div>anchor</div>
+        </table>
+
+        <div>
+            <p style="text-align: right">ver:1.1.0</p>
+        </div>   
+                       
     </div>
     
     
     <script>
-        let copy = (copyText) => {
-            document.getElementById(copyText).select();    
-            document.execCommand('copy');        
-        }
+    
+    // Механизм поиска 
+	function myFunctionFind() {
+	var input, filter, table, tr, td, i, txtValue;
+	input = document.getElementById("myInput");
+	filter = input.value.toUpperCase();
+	table = document.getElementById("myTable");
+	tr = table.getElementsByTagName("tr");
+	for (i = 0; i < tr.length; i++) {
+		td = tr[i].getElementsByTagName("td")[3];
+		if (td) {
+		txtValue = td.textContent || td.innerText;
+		if (txtValue.toUpperCase().indexOf(filter) > -1) {
+			tr[i].style.display = "";
+		} else {
+			tr[i].style.display = "none";
+		}
+		}       
+	}
+	}
+	
+    // Работа с буфером обмена 
+    function myFunction(myInput,myTooltip) {
+    var copyText = document.getElementById(myInput);
+    copyText.select();
+    copyText.setSelectionRange(0, 99999);
+    navigator.clipboard.writeText(copyText.value);
+  
+    var tooltip = document.getElementById(myTooltip);
+    tooltip.innerHTML = "Скопировано: " + copyText.value;
+    }
+
+    function outFunc1(myTooltip) {
+    var tooltip = document.getElementById(myTooltip);
+    tooltip.innerHTML = "Скопировать в буфер обмена";
+    }
+    
+	// Очистка строки поиска
+	function clearInputField() {
+        document.getElementById('FormSearchBar').reset();
+    }
+    
     </script>
 
 </body>

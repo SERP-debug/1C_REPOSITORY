@@ -1,0 +1,29 @@
+{
+ "Values":[
+    {
+    "Path": "1idm_relese_minor",
+    "description": "Описание по Хранилищу ИБ - 1idm_relese_minor"
+    },
+    {
+	"Path": "FSS_EXT",
+	"description": "Описание по Хранилищу ИБ - FSS_EXT"
+    },
+    {
+	"Path": "Demo_ext",
+	"description": "Описание по Хранилищу ИБ - Demo_ext"
+    },
+	{
+	"Path": "1IDM",
+	"description": "Описание по Хранилищу ИБ - 1IDM, описание длинная строка описание длинная строка описание длинная строка 117 символов"
+    },
+	{
+	"Path": "NewRepository",
+	"description": "NewRepository ТЕСТ"
+    },
+	{
+	"Path": "Новая папка (2)",
+	"description": "Описание -"
+    }
+    ]
+}
+    
