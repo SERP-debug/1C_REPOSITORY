@@ -1,6 +1,8 @@
 **ver:1.1.1.**
 Исправлена ошибка 
-заменена строка кода команда navigator.clipboard по безопасности не отработаывала на IIS
+заменена строка кода
+
+команда navigator.clipboard по безопасности не отработаывала на IIS
 ![111110](https://github.com/user-attachments/assets/a32a091d-df22-466e-be0a-f3c6d5ab8198)
 
 
