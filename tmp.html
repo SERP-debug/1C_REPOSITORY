@@ -60,20 +60,16 @@
 	}
 	
     // Работа с буфером обмена 
-    function myFunction(myInput,myTooltip) {
-    var copyText = document.getElementById(myInput);
-    copyText.select();
-    copyText.setSelectionRange(0, 99999);
-    navigator.clipboard.writeText(copyText.value);
-  
-    var tooltip = document.getElementById(myTooltip);
-    tooltip.innerHTML = "Скопировано: " + copyText.value;
-    }
-
-    function outFunc1(myTooltip) {
-    var tooltip = document.getElementById(myTooltip);
-    tooltip.innerHTML = "Скопировать в буфер обмена";
-    }
+    function copyToTitle(text, element) {
+            var input = document.createElement('input');
+            input.setAttribute('value', text);
+            document.body.appendChild(input);
+            input.select();
+            document.execCommand('copy');
+            document.body.removeChild(input);
+            element.setAttribute('title', 'Скопировано: ' + text);
+            alert('Скопировано: ' + text);
+        }
     
 	// Очистка строки поиска
 	function clearInputField() {

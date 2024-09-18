@@ -71,7 +71,7 @@ function ApplyTmp() {
         "`t`t`t`t`t<td style=""white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 50px;""><input type=""text"" class=""SERP"" value=""tcp://vcs/"+$_.Name+""" id="""+$_.Name+""" readonly style=""text-align: left; width: 100%;""></td>`n"+
         "`t`t`t`t`t<td style=""text-align: center; width: 40px;"">`n"+
         "`t`t`t`t`t`t<div class=""tooltip"">`n"+
-        "`t`t`t`t`t`t`t<button onclick=""myFunction('"+$_.Name+"','"+$_.Name+"_')"" onmouseout=""outFunc1('"+$_.Name+"_')"">`n"+
+        "`t`t`t`t`t`t`t<button onclick=""copyToTitle('tcp://vcs/" + $_.Name + "', this)"">`n"+
         "`t`t`t`t`t`t`t`t<span class=""tooltiptext"" id="""+$_.Name+"_"">Скопировать to clipboard</span>`n"+
         "`t`t`t`t`t`t`t`t`t<svg xmlns=""http://www.w3.org/2000/svg"" width=""12"" height=""12"" viewBox=""0 0 24 24"" fill=""none"" stroke=""currentColor"" stroke-width=""2"" stroke-linecap=""round"" stroke-linejoin=""round"" class=""feather feather-copy"">`n"+
         "`t`t`t`t`t`t`t`t`t`t<rect x=""9"" y=""9"" width=""13"" height=""13"" rx=""2"" ry=""2""></rect>`n"+
