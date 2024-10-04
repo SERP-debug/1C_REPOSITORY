@@ -20,7 +20,7 @@ function WriteLog() {
 }
 
 if ($LogfileExists) {
-    WriteLog "Скрипт запущен”
+    WriteLog ("Скрипт запущен”)
 }
 
 #Не показывает не критические ошибки 
@@ -87,6 +87,35 @@ function ApplyTmp() {
     return $ReplaceableText
 }
 
+function SendMail($MailBody) {
+
+    #Читаем почтовый настройки 
+    $ServerSmtp         = $h.Get_Item("ServerSmtp")
+    $Port               = $h.Get_Item("Port")
+    $From               = $h.Get_Item("From")
+    $To                 = $h.Get_Item("To")
+    $Subject            = $h.Get_Item("Subject")
+    $User               = $h.Get_Item("User")
+    $Pass               = $h.Get_Item("Pass")
+     #Формируем данные для отправки
+    $mes = New-Object System.Net.Mail.MailMessage   
+    $mes.From = $from
+    $mes.To.Add($to) 
+    $mes.Subject = $subject 
+    $mes.IsBodyHTML = $true 
+    $mes.Body = $MailBody
+    #Создаем экземпляр класса подключения к SMTP серверу 
+    $smtp = New-Object Net.Mail.SmtpClient($serverSmtp, $port)
+    #Сервер использует SSL 
+    $smtp.EnableSSL = $true 
+    #Создаем экземпляр класса для авторизации на сервере яндекса
+    $smtp.Credentials = New-Object System.Net.NetworkCredential($user, $pass);
+    #Отправляем письмо, освобождаем память
+    $smtp.Send($mes) 
+    $att.Dispose()
+    
+}
+
 #Получение параметров из config.ini
 Get-Content $PathIniFile | foreach-object -begin {$h=@{}} -process { $k = [regex]::split($_,'='); if(($k[0].CompareTo("") -ne 0) -and ($k[0].StartsWith("[") -ne $True)) { $h.Add($k[0], $k[1]) } }
 
@@ -94,8 +123,46 @@ $DirREPOSITORY      = $h.Get_Item("DirREPOSITORY")
 $TmpHTML            = $h.Get_Item("TmpHTML")
 $ResultHTML         = $h.Get_Item("HTML")
 
+# Чтение списка ИБ из файла - загруженные в прошлый раз  
+$beforelist = Import-Clixml .\beforelist.xml
+
 # Загрузка и сортировка папок ИБ 
 $bsort = Get-Childitem -Path $DirREPOSITORY -Directory | Sort-Object -Property CreationTime -Descending
+
+# Сравнение массивов, если пустой значит новых репозиториев нет
+$Compare = Compare-Object -ReferenceObject $beforelist -DifferenceObject $bsort -Property name 
+
+if (($Compare.count -eq 0) -or ($beforelist.Count -eq 0))
+{#Новых репозиториев нет или несчем сравнивать     
+}
+else {#Есть новые/удаленные репозитории 
+    
+    $TextREPOSITORY = ""
+    foreach ($item in $Compare) {
+    if ( $item.SideIndicator -eq "=>")
+    {
+        # Есть добавленные репозитории 
+        $TextREPOSITORY = $TextREPOSITORY + "Новый репозиторий: " + $h.Get_Item("PrefixBase") + $item.name + "<br>`n"
+    }
+    else
+    {
+        # Есть удаленные репозитории 
+        $TextREPOSITORY = $TextREPOSITORY + "Удален репозиторий: " + $h.Get_Item("PrefixBase") + $item.name + "<br>`n"
+    }
+    }
+
+    $TextREPOSITORY = "<h2>Здравствуйте!</h2>`n" +
+    $TextREPOSITORY +
+    "<br><a href="+$h.Get_Item("PathRepos")+">Актуальный список хранилищ конфигураций 1С</a><br>`n" +
+    "<h4><br>Не забудьте занести описание новому репозиторию<br></h4>`n" +  
+    "<h4>Данное письмо носит информационный харектер. Пожалуйста, не отвечайте на него</h4>`n"  
+
+    SendMail ($TextREPOSITORY)          
+
+}
+
+# Запись в файл состояния списка
+$bsort | Export-Clixml .\beforelist.xml  
 
 #Формирование структуры таблицы с Описанием
 $table = New-Object System.Data.DataTable
@@ -121,13 +188,27 @@ foreach ($item in $table) {
     }
 }
 
-# Полечение текста замены
+# Если есть изменения в списке, то обновляем файл с описаниями 
+if ($Compare.count -ne 0){
+    # $jsonBase = @{}
+    $list = New-Object System.Collections.ArrayList
+        foreach ($item in $table) {
+            # >$Null - чтобы в консоль ничего не выводилось 
+            $list.Add(@{"Path"=$item.name;"description"=$item.Description;})>$Null    
+        }
+    $Description = @{"Values"=$list;}
+    #$jsonBase.Add("Data",$customers)
+    $Description | ConvertTo-Json -Depth 10 | Out-File $DescriptionJson
+}
+
+
+# Получение текста замены
 $ReplaceText = ApplyTmp
-# Получение шаблона
+# Получение html-шаблона 
 $Content = Get-Content $TmpHTML
 # Подставка текста замены в шаблон и запись в итоговый файл
 $Content.replace(‘<div>anchor</div>’,$ReplaceText)| Out-File -Encoding utf8 $ResultHTML
 
 if ($LogfileExists) {
-    WriteLog "Скрипт выполнен успешно”
+    WriteLog ("Скрипт выполнен успешно”)
 }
